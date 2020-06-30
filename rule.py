@@ -81,3 +81,33 @@ class board:
 				return tx
 			tx+=1
 			if tx==6:return 6
+	
+	def value(self):#ONLY for searchonly test
+		points=0.0
+		for x in range(6):
+			for y in range(7):
+				if self.grid[x][y]==0:continue
+				color=self.grid[x][y]
+				for i in range(4):
+					tx=x-direction[i][0];ty=y-direction[i][1]
+					if tx<6 and tx>=0 and ty<7 and ty>=0:
+						if self.grid[tx][ty]==color:continue
+					
+					inarow=1
+					tx=x;ty=y
+					while 1:
+						tx=tx+direction[i][0];ty=ty+direction[i][1]
+						if tx>=6 or tx<0 or ty>=7 or ty<0:
+							break
+						if self.grid[tx][ty]!=color:
+							break
+						inarow+=1
+					if color==1:
+						if inarow==2:points+=0.0001
+						if inarow==3:points+=0.01
+						if inarow>=4:points+=1
+					else:
+						if inarow==2:points-=0.0001
+						if inarow==3:points-=0.01
+						if inarow>=4:points-=1
+		return points
